@@ -1,0 +1,11 @@
+Flask
+pandas
+numpy
+scikit-learn
+xgboost
+joblib
+requests
+Werkzeug
+gunicorn
+matplotlib
+Seaborn

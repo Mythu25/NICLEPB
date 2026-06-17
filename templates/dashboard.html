@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Load Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>📊 Cognitive Load Analytics</h1>
+            <div class="load-indicator" id="loadIndicator">
+                <div class="load-level" data-level="{{ analysis.prediction }}"></div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>🎯 Prediction</h3>
+                <div class="prediction-display">
+                    <h2 id="predictionLevel">{{ analysis.prediction }}</h2>
+                    <div class="confidence">Confidence: <strong>{{ "%.1f"|format(analysis.confidence * 100) }}%</strong></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📈 Key Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span>Total Time</span>
+                        <strong>{{ "%.1f"|format(analysis.metrics.total_time/60) }} min</strong>
+                    </div>
+                    <div class="metric-item">
+                        <span>Error Rate</span>
+                        <strong>{{ "%.1f"|format(analysis.metrics.error_rate*100) }}%</strong>
+                    </div>
+                    <div class="metric-item">
+                        <span>Success Rate</span>
+                        <strong>{{ "%.1f"|format(analysis.metrics.success_rate*100) }}%</strong>
+                    </div>
+                    <div class="metric-item">
+                        <span>Runs</span>
+                        <strong>{{ analysis.metrics.total_runs }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card full-width">
+                <h3>📊 Feature Importance</h3>
+                <canvas id="featureChart"></canvas>
+            </div>
+
+            <div class="card full-width">
+                <h3>💡 Recommendations</h3>
+                <div id="recommendations"></div>
+            </div>
+
+            <div class="card">
+                <h3>🔬 Model Performance</h3>
+                <div class="model-metrics">
+                    <div>Accuracy: <strong>{{ "%.3f"|format(model_metrics.accuracy) }}</strong></div>
+                    <div>F1-Score: <strong>{{ "%.3f"|format(model_metrics.f1) }}</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        initDashboard({{ analysis|tojson }}, {{ model_metrics|tojson }});
+    </script>
+</body>
+</html>

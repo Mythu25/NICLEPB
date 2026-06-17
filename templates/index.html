@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Load Estimator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Cognitive Load Estimator</h1>
+            <p>Non-intrusive estimation of cognitive load from programming behavior</p>
+        </header>
+        
+        <div class="start-container">
+            <h2>Start Programming Session</h2>
+            <p>Write Python code in our web IDE. Your cognitive load will be automatically estimated.</p>
+            <button id="startBtn" class="btn-primary">🚀 Start Coding</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const response = await fetch('/start_session', { method: 'POST' });
+            const data = await response.json();
+            window.location.href = `/ide/${data.session_id}`;
+        });
+    </script>
+</body>
+</html>

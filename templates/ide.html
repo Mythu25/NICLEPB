@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python IDE - Cognitive Load Estimator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+</head>
+<body>
+    <div class="ide-container">
+        <div class="ide-header">
+            <h2>🐍 Python IDE</h2>
+            <div class="status-bar">
+                <span id="status">Ready</span>
+                <button id="runBtn" class="btn-run">▶️ Run Code</button>
+                <button id="analyzeBtn" class="btn-analyze">📊 Analyze Load</button>
+                <a href="/dashboard/{{ session_id }}" class="btn-dashboard">📈 Dashboard</a>
+            </div>
+        </div>
+        
+        <div class="ide-body">
+            <div class="editor-container">
+                <textarea id="codeEditor"></textarea>
+            </div>
+            <div class="output-container">
+                <div id="output" class="output"></div>
+            </div>
+        </div>
+        
+        <div class="metrics-panel">
+            <div class="metric">
+                <span>Session:</span> <span id="sessionTime">00:00</span>
+            </div>
+            <div class="metric">
+                <span>Runs:</span> <span id="runCount">0</span>
+            </div>
+            <div class="metric">
+                <span>Errors:</span> <span id="errorCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="{{ url_for('static', filename='js/ide.js') }}"></script>
+    <script>
+        const sessionId = '{{ session_id }}';
+        initIDE(sessionId);
+    </script>
+</body>
+</html>
